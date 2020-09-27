@@ -10,15 +10,36 @@ import UIKit
 
 class ViewController: UIViewController, CalculatorProtocol {
     
-    func buttonPressed(key: String) {
-        switch key {
-        case "Button0","Button1":
-            print(key)
+    @IBOutlet weak var labelNumberOne: UILabel!
+    
+    @IBOutlet weak var labelNumber2: UILabel!
+    
+    @IBAction func buttonPressed(_ sender: UIButton) {
+        
+        switch String(sender.accessibilityIdentifier!) {
+        /*case "+","-","*","/","%":
+            if labelNumber2.text != "" {
+                
+            }*/
+        case "ButtonClear":
             
+            labelNumber2.text! = ""
+            
+        /*case "ButtonMultiply":
+        
+        case "ButtonDivision":
+            
+        case "ButtonModule"*/
         default:
-            <#code#>
+            labelNumber2.text = labelNumber2.text! + String(sender.accessibilityIdentifier!)
         }
+        
     }
+    
+    func checkOperand(operand: String){
+        
+    }
+    
     
     func add(num1: Float, num2: Float) -> Float {
         
@@ -66,7 +87,7 @@ protocol CalculatorProtocol {
     func multiply(num1: Float, num2: Float) -> Float
     func division(num1: Float, num2: Float) -> Float
     func module(num1: Int, num2: Int) -> Int
-    func buttonPressed(key: String)
+
 }
  
 
