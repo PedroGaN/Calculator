@@ -14,30 +14,93 @@ class ViewController: UIViewController, CalculatorProtocol {
     
     @IBOutlet weak var labelNumber2: UILabel!
     
+    @IBOutlet weak var labelStoredOperand: UILabel!
+    
+    var storedOperand = ""
+
+    
     @IBAction func buttonPressed(_ sender: UIButton) {
         
         switch String(sender.accessibilityIdentifier!) {
-        /*case "+","-","*","/","%":
-            if labelNumber2.text != "" {
-                
-            }*/
+        case "+","-","*","/","%":
+            if labelNumberOne.text! == ""{
+                break
+            }
+            if storedOperand == "" {
+                if labelNumberOne.text! == "" {
+                     labelNumberOne.text! = labelNumber2.text!
+                }
+                labelNumber2.text! = ""
+                storedOperand = String(sender.accessibilityIdentifier!)
+                labelStoredOperand.text! = storedOperand
+            } else if labelNumber2.text! != ""{
+                math(operand: storedOperand)
+                labelNumber2.text! = ""
+                storedOperand = String(sender.accessibilityIdentifier!)
+                labelStoredOperand.text! = storedOperand
+            } else {
+                storedOperand = String(sender.accessibilityIdentifier!)
+                labelStoredOperand.text! = storedOperand
+            }
+
+            
         case "ButtonClear":
             
             labelNumber2.text! = ""
             
-        /*case "ButtonMultiply":
-        
-        case "ButtonDivision":
+        case "ButtonClearEverything":
             
-        case "ButtonModule"*/
+            labelNumber2.text! = ""
+            labelNumberOne.text! = ""
+            storedOperand = ""
+            labelStoredOperand.text! = storedOperand
+            
+        case "ButtonEquals":
+            
+            if storedOperand == "" {
+                labelNumberOne.text! = labelNumber2.text!
+                labelNumber2.text! = ""
+            } else if labelNumber2.text! != "" {
+                math(operand: storedOperand)
+                labelNumber2.text! = ""
+                storedOperand = ""
+                labelStoredOperand.text! = storedOperand
+            }
+
         default:
             labelNumber2.text = labelNumber2.text! + String(sender.accessibilityIdentifier!)
         }
         
     }
     
-    func checkOperand(operand: String){
+    func math(operand: String){
         
+        switch operand {
+        case "+":
+            labelNumberOne.text! = String(Int(labelNumberOne.text!)! + Int(labelNumber2.text!)!)
+            break
+        case "-":
+            labelNumberOne.text! = String(Int(labelNumberOne.text!)! - Int(labelNumber2.text!)!)
+            break
+        case "*":
+            labelNumberOne.text! = String(Int(labelNumberOne.text!)! * Int(labelNumber2.text!)!)
+            break
+        case "/":
+            if labelNumber2.text! == "0"{
+                labelNumber2.text! = ""
+                labelNumberOne.text! = ""
+                storedOperand = ""
+            } else {
+                labelNumberOne.text! = String(Int(labelNumberOne.text!)! / Int(labelNumber2.text!)!)
+            }
+
+            break
+        case "%":
+            labelNumberOne.text! = String(Int(labelNumberOne.text!)! % Int(labelNumber2.text!)!)
+            break
+        default:
+            break
+        }
     }
     
     
