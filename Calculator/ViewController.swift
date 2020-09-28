@@ -23,7 +23,7 @@ class ViewController: UIViewController, CalculatorProtocol {
         
         switch String(sender.accessibilityIdentifier!) {
         case "+","-","*","/","%":
-            if labelNumberOne.text! == ""{
+            if labelNumber2.text! == "" && labelNumberOne.text! == ""{
                 break
             }
             if storedOperand == "" {
